@@ -39,7 +39,7 @@ def main():
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(results_summary, f, ensure_ascii=False, indent=2)
 
-    print("✅ Validación finalizada. Resultados en:", OUTPUT_DIR)
+    print(" Validación finalizada. Resultados en:", OUTPUT_DIR)
 
 if __name__ == "__main__":
     main()
