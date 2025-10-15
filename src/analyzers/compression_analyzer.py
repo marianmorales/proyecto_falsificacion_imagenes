@@ -81,7 +81,7 @@ class CompressionAnalyzer(BaseAnalyzer):
         }
 
         if file_format in ["jpg", "jpeg"]:
-            result["note"] = "⚠️ Imagen JPEG detectada: resultados ELA pueden no ser confiables."
+            result["note"] = " Imagen JPEG detectada: resultados ELA pueden no ser confiables."
         else:
             result["note"] = "Formato sin pérdida detectado: análisis ELA más confiable."
 
