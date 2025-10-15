@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify, render_template_string
 import numpy as np
 import cv2
 from src.core.image_forgery_detector import ImageForgeryDetector
-
+import tempfile
+import os
 
 app = Flask(__name__)
 detector = ImageForgeryDetector()
@@ -33,11 +34,20 @@ def analyze():
     if not f:
         return "No se subió ningún archivo", 400
 
-    data = f.read()
-    nparr = np.frombuffer(data, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    # Guardar la imagen temporalmente para poder leer EXIF
+    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(f.filename)[1]) as tmp:
+        f.save(tmp.name)
+        filepath = tmp.name
 
-    res = detector.analyze_from_array(img)
+    # Leer la imagen con OpenCV
+    img = cv2.imread(filepath)
+
+    # Analizar con filepath (para EXIF)
+    res = detector.analyze_from_path(filepath)
+
+    # Eliminar el archivo temporal después del análisis
+    os.remove(filepath)
+
     return render_template_string(INDEX_HTML, result=res["report"])
 
 @app.route("/api/analyze", methods=["POST"])
