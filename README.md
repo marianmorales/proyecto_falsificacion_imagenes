@@ -23,7 +23,9 @@ El sistema analiza metadatos, compresión, clonaciones y artefactos visuales par
 El sistema sigue un enfoque de Programación Orientada a Objetos (POO) para mantener modularidad:
 
 ImageForgeryDetector – Clase principal que gestiona el análisis.
+
 CloningAnalyzer, CompressionAnalyzer, MetadataAnalyzer – Módulos de detección especializados.
+
 ReportGenerator – Crea el reporte final con los resultados.
 
 ## Ejemplo de Uso
