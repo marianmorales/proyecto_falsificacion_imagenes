@@ -1,71 +1,74 @@
 from flask import Flask, request, jsonify, render_template_string
-import numpy as np
-import cv2
 from src.core.image_forgery_detector import ImageForgeryDetector
-import tempfile
 import os
 
 app = Flask(__name__)
 detector = ImageForgeryDetector()
 
-# Interfaz HTML simple
-INDEX_HTML = """
-<!doctype html>
-<title>Detección de Manipulación - MVP</title>
-<h2>Subir imagen para analizar</h2>
-<form method=post enctype=multipart/form-data action="/analyze">
-  <input type=file name=file>
-  <input type=submit value="Analizar">
-</form>
-{% if result %}
-  <h3>Reporte</h3>
-  <img src="data:image/png;base64,{{ result['image_base64'] }}" style="max-width:80%;">
-  <pre>{{ result['text_report'] | tojson(indent=2) }}</pre>
-{% endif %}
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detector de Falsificación de Imágenes </title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; text-align: center; margin: 0; padding: 40px; }
+        .container { background: white; display: inline-block; padding: 30px; border-radius: 15px;
+                     box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        input[type=file] { margin: 15px 0; }
+        img { max-width: 600px; border-radius: 10px; margin-top: 20px; }
+        pre { text-align: left; background: #fafafa; padding: 15px; border-radius: 10px;
+              border: 1px solid #ddd; overflow-x: auto; }
+        button { background-color: #0078D7; color: white; border: none; padding: 10px 25px;
+                 border-radius: 8px; cursor: pointer; }
+        button:hover { background-color: #005a9e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detector de Falsificación de Imágenes </h1>
+        <form action="/analyze" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <br>
+            <button type="submit">Analizar imagen</button>
+        </form>
+
+        {% if text_report %}
+            <h3>Informe:</h3>
+            <pre>{{ text_report }}</pre>
+        {% endif %}
+
+        {% if image_base64 %}
+            <h3>Regiones sospechosas detectadas:</h3>
+            <img src="data:image/png;base64,{{ image_base64 }}" alt="Resultado del análisis">
+        {% endif %}
+    </div>
+</body>
+</html>
 """
 
 @app.route("/", methods=["GET"])
-def index():
-    return render_template_string(INDEX_HTML)
+def home():
+    return render_template_string(HTML_TEMPLATE)
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
-    f = request.files.get("file")
-    if not f:
-        return "No se subió ningún archivo", 400
+    if "file" not in request.files:
+        return render_template_string(HTML_TEMPLATE, text_report="⚠️ No se envió ningún archivo.")
 
-    # Guardar la imagen temporalmente para poder leer EXIF
-    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(f.filename)[1]) as tmp:
-        f.save(tmp.name)
-        filepath = tmp.name
+    file = request.files["file"]
+    os.makedirs("validation_outputs", exist_ok=True)
+    filepath = os.path.join("validation_outputs", file.filename)
+    file.save(filepath)
 
-    # Leer la imagen con OpenCV
-    img = cv2.imread(filepath)
+    result = detector.analyze_from_path(filepath)
+    report = result.get("report", {})
 
-    # Analizar con filepath (para EXIF)
-    res = detector.analyze_from_path(filepath)
+    # Extraer el texto y la imagen codificada
+    text_report = report.get("text_report", "Sin informe generado.")
+    image_base64 = report.get("image_base64", None)
 
-    # Eliminar el archivo temporal después del análisis
-    os.remove(filepath)
-
-    return render_template_string(INDEX_HTML, result=res["report"])
-
-@app.route("/api/analyze", methods=["POST"])
-def api_analyze():
-    f = request.files.get("file")
-    if not f:
-        return jsonify({"error": "No se subió archivo"}), 400
-
-    data = f.read()
-    nparr = np.frombuffer(data, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    res = detector.analyze_from_array(img)
-
-    return jsonify({
-        "overall_confidence": res.get("overall_confidence"),
-        "report": res.get("report")["text_report"],
-        "image_base64": res.get("report")["image_base64"]
-    })
+    return render_template_string(HTML_TEMPLATE, text_report=text_report, image_base64=image_base64)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="127.0.0.1", port=5000, debug=True)

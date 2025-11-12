@@ -1,5 +1,5 @@
 import os
-from core.image_forgery_detector import ImageForgeryDetector
+from src.core.image_forgery_detector import ImageForgeryDetector
 import base64
 from pathlib import Path
 import json
