@@ -40,9 +40,9 @@ detector.generate_report(results)
 
 ## Resultados Esperados
 
--Imagen de salida con zonas manipuladas resaltadas.
+- Imagen de salida con zonas manipuladas resaltadas.
 
--Reporte de texto con nivel de confianza e inconsistencias detectadas.
+- Reporte de texto con nivel de confianza e inconsistencias detectadas.
 
 ## Autores
 
