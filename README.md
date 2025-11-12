@@ -33,10 +33,12 @@ python
 from detector import ImageForgeryDetector
 
 detector = ImageForgeryDetector("imagen_sospechosa.jpg")
+
 results = detector.run_analysis()
+
 detector.generate_report(results)
 
-##Resultados Esperados
+## Resultados Esperados
 
 -Imagen de salida con zonas manipuladas resaltadas.
 -Reporte de texto con nivel de confianza e inconsistencias detectadas.
