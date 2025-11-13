@@ -1,6 +1,6 @@
 {
-  "cloning_count": 1186,
-  "cloning_confidence": 1.0,
+  "cloning_count": 0,
+  "cloning_confidence": 0.0,
   "ela_confidence": 0.0,
   "metadata": {
     "error": "Given file is neither JPEG nor TIFF.",

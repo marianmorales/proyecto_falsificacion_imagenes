@@ -3,8 +3,8 @@
     "file": "foto-modificada.jpeg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto-modificada_result.png",
     "report": {
-      "cloning_count": 7228,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "gimp 3.0.6",
@@ -21,8 +21,8 @@
     "file": "foto_original_1.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_1_result.png",
     "report": {
-      "cloning_count": 7103,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -39,8 +39,8 @@
     "file": "foto_original_2.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_2_result.png",
     "report": {
-      "cloning_count": 6598,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -57,8 +57,8 @@
     "file": "foto_original_3.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_3_result.png",
     "report": {
-      "cloning_count": 7525,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -75,8 +75,8 @@
     "file": "foto_original_4.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_4_result.png",
     "report": {
-      "cloning_count": 6752,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -93,8 +93,8 @@
     "file": "foto_original_5.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_5_result.png",
     "report": {
-      "cloning_count": 7088,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -111,8 +111,8 @@
     "file": "foto_original_6.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\foto_original_6_result.png",
     "report": {
-      "cloning_count": 7525,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -129,8 +129,8 @@
     "file": "imagen-clonada.jpeg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\imagen-clonada_result.png",
     "report": {
-      "cloning_count": 6599,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "gimp 3.0.6",
@@ -147,8 +147,8 @@
     "file": "imagen-con-filtro.jpeg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\imagen-con-filtro_result.png",
     "report": {
-      "cloning_count": 7354,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "gimp 3.0.6",
@@ -165,8 +165,8 @@
     "file": "imagen-no-real.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\imagen-no-real_result.png",
     "report": {
-      "cloning_count": 16,
-      "cloning_confidence": 0.8,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -183,8 +183,8 @@
     "file": "imagen-real.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\imagen-real_result.png",
     "report": {
-      "cloning_count": 6,
-      "cloning_confidence": 0.3,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "adobe photoshop cs6 (windows)",
@@ -201,8 +201,8 @@
     "file": "meme.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\meme_result.png",
     "report": {
-      "cloning_count": 508,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",
@@ -219,8 +219,8 @@
     "file": "montaje_photoshop_10.png",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\montaje_photoshop_10_result.png",
     "report": {
-      "cloning_count": 1186,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "error": "Given file is neither JPEG nor TIFF.",
@@ -234,8 +234,8 @@
     "file": "original.jpg",
     "out_image": "C:\\Users\\Mariana\\Documents\\Carpetas\\Proyectos\\proyecto_falsificacion_imagenes\\validation_outputs\\original_result.png",
     "report": {
-      "cloning_count": 18693,
-      "cloning_confidence": 1.0,
+      "cloning_count": 0,
+      "cloning_confidence": 0.0,
       "ela_confidence": 0.0,
       "metadata": {
         "software": "Desconocido",

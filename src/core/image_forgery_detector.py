@@ -1,7 +1,5 @@
 import cv2
-import base64
 import numpy as np
-import os
 from src.analyzers.preprocessing_analyzer import PreprocessingAnalyzer
 from src.analyzers.cloning_analyzer import CloningAnalyzer
 from src.analyzers.compression_analyzer import CompressionAnalyzer
@@ -11,7 +9,7 @@ from src.report.report_generator import ReportGenerator
 
 class ImageForgeryDetector:
     """
-    Clase principal que coordina los análisis de manipulación de imagen.
+    Clase principal que coordina los análisis de manipulación de imágenes.
     """
 
     def __init__(self):
@@ -22,84 +20,90 @@ class ImageForgeryDetector:
         self.reporter = ReportGenerator()
 
     def analyze_from_path(self, filepath):
-        """
-        Carga una imagen desde el disco y la analiza.
-        """
+        """Carga una imagen desde disco y la analiza."""
         img = cv2.imread(filepath)
-        if img is None:
-            raise ValueError(f"No se pudo cargar la imagen desde: {filepath}")
         return self._analyze(img, info={"filepath": filepath})
 
     def analyze_from_array(self, bgr_image):
-        """
-        Analiza una imagen recibida como array (por ejemplo, desde Flask).
-        """
+        """Analiza una imagen recibida como array (por ejemplo, desde Flask)."""
         return self._analyze(bgr_image, info=None)
 
     def _analyze(self, img_bgr, info=None):
-        """
-        Ejecuta la secuencia completa de análisis y genera reporte visual y textual.
-        """
-        # --- Etapas de análisis individuales ---
-        pre = self.pre.analyze(img_bgr)
-        clon = self.clone.analyze(img_bgr)
-        comp = self.comp.analyze(img_bgr)
-        meta = self.meta.analyze(img_bgr, info=info)
+        if img_bgr is None:
+            raise ValueError("Imagen no válida o no encontrada.")
 
-        # --- Cálculo de confiabilidad combinada ---
+        # ===== 1. PREPROCESAMIENTO =====
+        pre = self.pre.analyze(img_bgr)
+
+        # ===== 2. ANÁLISIS DE CLONACIÓN =====
+        clon = self.clone.analyze(img_bgr)
+        suspicious_mask = clon.get("suspicious_mask", np.zeros(img_bgr.shape[:2], np.uint8))
+        cloning_count = clon.get("cloning_count", 0)
         cloning_conf = clon.get("confidence", 0.0)
+
+        # ===== 3. ANÁLISIS DE COMPRESIÓN (ELA) =====
+        comp = self.comp.analyze(img_bgr)
         ela_conf = comp.get("confidence", 0.0)
+
+        # ===== 4. ANÁLISIS DE METADATOS =====
+        meta = self.meta.analyze(img_bgr, info=info)
         meta_conf = meta.get("confidence", 0.0)
 
+        # ===== 5. COMBINAR PUNTAJES =====
         overall_confidence = min(1.0, cloning_conf * 0.6 + ela_conf * 0.3 + meta_conf * 0.4)
 
-        # --- Consolidar resultados ---
+        # ===== 6. GENERAR OVERLAY VISUAL =====
+        overlay = img_bgr.copy()
+        mask_norm = cv2.normalize(suspicious_mask, None, 0, 255, cv2.NORM_MINMAX)
+        mask_colored = cv2.applyColorMap(mask_norm.astype(np.uint8), cv2.COLORMAP_JET)
+        blended = cv2.addWeighted(overlay, 0.7, mask_colored, 0.3, 0)
+
+        # === Barra de confianza visual mejorada ===
+        legend_height = 60
+        bar = np.zeros((legend_height, blended.shape[1], 3), dtype=np.uint8)
+
+        for i in range(bar.shape[1]):
+            ratio = i / bar.shape[1]
+            if ratio < 0.5:
+                g = 255
+                r = int(510 * ratio)
+                color_grad = (0, g, r)
+            else:
+                r = 255
+                g = int(510 * (1 - ratio))
+                color_grad = (0, g, r)
+            bar[:, i] = color_grad
+
+        # Texto centrado y legible
+        cv2.putText(bar, "Baja sospecha", (30, 40),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+        cv2.putText(bar, "Alta sospecha", (bar.shape[1]-200, 40),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+
+        conf_text = f"Confianza: {cloning_conf:.2f}"
+        text_size = cv2.getTextSize(conf_text, cv2.FONT_HERSHEY_SIMPLEX, 0.9, 2)[0]
+        text_x = (bar.shape[1] - text_size[0]) // 2
+        cv2.putText(bar, conf_text, (text_x, 40),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
+
+        # Unir barra + imagen
+        final_display = np.vstack([blended, bar])
+
+        # Guardar debug overlay
+        cv2.imwrite("validation_outputs/debug_overlay.jpg", final_display)
+        print(" Imagen de sospechas guardada en validation_outputs/debug_overlay.jpg")
+
+        # ===== 7. GENERAR REPORTE =====
         results = {
             "pre": pre,
-            "suspicious_mask": clon.get("suspicious_mask"),
-            "cloning_count": clon.get("cloning_count"),
+            "suspicious_mask": suspicious_mask,
+            "cloning_count": cloning_count,
             "cloning_confidence": cloning_conf,
-            "ela_image": comp.get("ela_image"),
-            "ela_mask": comp.get("ela_mask"),
             "ela_confidence": ela_conf,
             "metadata": meta,
             "overall_confidence": overall_confidence
         }
 
-        # --- Generar visualización de regiones sospechosas ---
-        overlay = img_bgr.copy()
-        suspicious_mask = clon.get("suspicious_mask")
-
-        os.makedirs("validation_outputs", exist_ok=True)
-
-        if suspicious_mask is not None and np.any(suspicious_mask):
-            print(" Se detectaron regiones sospechosas, generando overlay...")
-            mask_uint8 = (suspicious_mask * 255).astype(np.uint8) if suspicious_mask.dtype != np.uint8 else suspicious_mask
-            contours, _ = cv2.findContours(mask_uint8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            cv2.drawContours(overlay, contours, -1, (0, 0, 255), 2)
-            overlay = cv2.addWeighted(img_bgr, 0.7, overlay, 0.3, 0)
-
-            # Guardar copia visual para depuración
-            cv2.imwrite("validation_outputs/debug_overlay.jpg", overlay)
-            print(" Imagen de sospechas guardada en validation_outputs/debug_overlay.jpg")
-        else:
-            print(" No se detectaron regiones sospechosas o máscara vacía")
-            overlay = img_bgr
-
-        # --- Convertir imagen resultante a Base64 para API ---
-        _, buffer = cv2.imencode(".png", overlay)
-        image_base64 = base64.b64encode(buffer).decode("utf-8")
-
-        # --- Generar reporte textual ---
         report = self.reporter.generate(img_bgr, results)
-
-        # --- Asegurar que el reporte incluya la imagen ---
-        if isinstance(report, dict):
-            report["image_base64"] = image_base64
-        else:
-            report = {"text_report": report, "image_base64": image_base64}
-
-        print(" Claves en el reporte:", list(report.keys()))
-
         results["report"] = report
         return results
