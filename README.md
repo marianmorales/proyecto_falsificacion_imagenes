@@ -1,20 +1,20 @@
-##Sistema de Detección de Manipulación en Imágenes Digitales
+## Sistema de Detección de Manipulación en Imágenes Digitales
 
 Este proyecto implementa un sistema capaz de detectar posibles manipulaciones en imágenes digitales mediante análisis automatizados.
 El objetivo es identificar alteraciones como clonación de regiones, inconsistencias en compresión JPEG, modificaciones de metadatos EXIF y artefactos visuales que evidencien fraude o edición digital.
 
-##Descripción General
+## Descripción General
 
 El sistema analiza una imagen sospechosa utilizando diversas técnicas de procesamiento digital.
 Cada módulo de análisis opera de forma independiente y aporta evidencia al resultado final, permitiendo generar un reporte completo con:
 
-Zonas sospechosas marcadas visualmente.
+-Zonas sospechosas marcadas visualmente.
 
-Inconsistencias detectadas durante los análisis.
+-Inconsistencias detectadas durante los análisis.
 
-Un nivel estimado de confianza sobre la posible manipulación.
+-Un nivel estimado de confianza sobre la posible manipulación.
 
-##Funcionalidades Principales
+## Funcionalidades Principales
 
 - Carga y análisis automático de imágenes sospechosas
 
@@ -80,7 +80,7 @@ Imagen con resaltado de zonas sospechosas
 
 Reporte textual con resultados detallados
 
-##Ejemplo de Uso
+## Ejemplo de Uso
 
 from detector import ImageForgeryDetector
 
