@@ -51,7 +51,7 @@ Cada responsabilidad del sistema se encapsula en una clase especializada, lo que
 
 Clases Principales
 
-- ImageForgeryDetector   - Clase central del sistema. Se encarga de:
+- ImageForgeryDetector (Clase central del sistema). Se encarga de:
 
 Gestionar la carga de la imagen de entrada.
 
