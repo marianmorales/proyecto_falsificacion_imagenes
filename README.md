@@ -49,7 +49,7 @@ Cada módulo de análisis opera de forma independiente y aporta evidencia al res
 El proyecto está construido bajo un enfoque modular y orientado a objetos (POO).
 Cada responsabilidad del sistema se encapsula en una clase especializada, lo que facilita la escalabilidad, el mantenimiento y la extensibilidad del análisis forense digital.
 
-# Clases Principales
+Clases Principales
 ImageForgeryDetector
 
 Clase central del sistema. Se encarga de:
@@ -66,25 +66,25 @@ Preparar los datos finales para la generación del reporte.
 
 (todas estas clases heredan de BaseAnalyzer)
 
-CloningAnalyzer
+- CloningAnalyzer
 
 Detecta posibles clonaciones mediante segmentación en bloques.
 
 Utiliza métricas de distancia (p. ej., euclidiana) para comparar regiones similares.
 
-CompressionAnalyzer
+- CompressionAnalyzer
 
 Evalúa la estructura de compresión JPEG.
 
 Ejecuta Error Level Analysis (ELA) para identificar zonas con compresión inconsistente, típicas de ediciones locales.
 
-MetadataAnalyzer
+- MetadataAnalyzer
 
 Extrae los metadatos EXIF de la imagen.
 
 Valida inconsistencias como fechas alteradas, modelo de cámara incorrecto o software sospechoso.
 
-ReportGenerator
+- ReportGenerator
 
 Responsable de la creación del informe final:
 
