@@ -34,15 +34,15 @@ Cada módulo de análisis opera de forma independiente y aporta evidencia al res
 
 ## Tecnologías Utilizadas
 
--Python 3.10+
+- Python 3.10+
 
--OpenCV – Procesamiento y análisis de imágenes
+- OpenCV – Procesamiento y análisis de imágenes
 
--NumPy – Operaciones numéricas y manejo de matrices
+- NumPy – Operaciones numéricas y manejo de matrices
 
--Pillow (PIL) – Análisis de compresión JPEG y ELA
+- Pillow (PIL) – Análisis de compresión JPEG y ELA
 
--piexif – Lectura y validación de metadatos EXIF
+- piexif – Lectura y validación de metadatos EXIF
 
 ## Arquitectura y Diseño (POO)
 
