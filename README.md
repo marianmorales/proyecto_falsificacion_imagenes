@@ -46,40 +46,51 @@ Cada módulo de análisis opera de forma independiente y aporta evidencia al res
 
 ## Arquitectura y Diseño (POO)
 
-El proyecto está desarrollado siguiendo un enfoque modular basado en Programación Orientada a Objetos (POO). Cada componente del análisis se implementa como una clase especializada, permitiendo escalabilidad y fácil mantenimiento.
+El proyecto está construido bajo un enfoque modular y orientado a objetos (POO).
+Cada responsabilidad del sistema se encapsula en una clase especializada, lo que facilita la escalabilidad, el mantenimiento y la extensibilidad del análisis forense digital.
 
- Clases Principales
- 
- ImageForgeryDetector
+# Clases Principales
+ImageForgeryDetector
 
-Clase central del sistema:
+Clase central del sistema. Se encarga de:
 
-Carga la imagen
+Gestionar la carga de la imagen de entrada.
 
-Ejecuta los módulos de análisis
+Ejecutar secuencialmente los módulos de análisis.
 
-Consolida los resultados
+Integrar y normalizar los resultados de cada analizador.
 
-Analizadores especializados
+Preparar los datos finales para la generación del reporte.
 
-(Heredan de una clase base BaseAnalyzer)
+## Analizadores Especializados
+
+(todas estas clases heredan de BaseAnalyzer)
 
 CloningAnalyzer
-Detecta clonación mediante segmentación en bloques y comparación por distancia.
+
+Detecta posibles clonaciones mediante segmentación en bloques.
+
+Utiliza métricas de distancia (p. ej., euclidiana) para comparar regiones similares.
 
 CompressionAnalyzer
-Analiza niveles de compresión y genera ELA para identificar zonas editadas.
+
+Evalúa la estructura de compresión JPEG.
+
+Ejecuta Error Level Analysis (ELA) para identificar zonas con compresión inconsistente, típicas de ediciones locales.
 
 MetadataAnalyzer
-Extrae y valida metadatos EXIF, detectando posibles inconsistencias.
+
+Extrae los metadatos EXIF de la imagen.
+
+Valida inconsistencias como fechas alteradas, modelo de cámara incorrecto o software sospechoso.
 
 ReportGenerator
 
-Genera:
+Responsable de la creación del informe final:
 
-Imagen con resaltado de zonas sospechosas
+Genera una imagen con las zonas sospechosas resaltadas.
 
-Reporte textual con resultados detallados
+Produce un reporte textual detallando evidencia, inconsistencias y nivel estimado de manipulación.
 
 ## Ejemplo de Uso
 
