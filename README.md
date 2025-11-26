@@ -50,7 +50,8 @@ El proyecto está construido bajo un enfoque modular y orientado a objetos (POO)
 Cada responsabilidad del sistema se encapsula en una clase especializada, lo que facilita la escalabilidad, el mantenimiento y la extensibilidad del análisis forense digital.
 
 Clases Principales
-ImageForgeryDetector
+
+- ImageForgeryDetector
 
 Clase central del sistema. Se encarga de:
 
