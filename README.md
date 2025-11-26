@@ -26,11 +26,11 @@ Cada módulo de análisis opera de forma independiente y aporta evidencia al res
 
 - Generación de un reporte completo:
 
--Imagen con zonas resaltadas
+- Imagen con zonas resaltadas
 
--Informe textual con descripción técnica de hallazgos
+- Informe textual con descripción técnica de hallazgos
 
--Nivel de confianza de manipulación
+- Nivel de confianza de manipulación
 
 ## Tecnologías Utilizadas
 
@@ -49,6 +49,7 @@ Cada módulo de análisis opera de forma independiente y aporta evidencia al res
 El proyecto está desarrollado siguiendo un enfoque modular basado en Programación Orientada a Objetos (POO). Cada componente del análisis se implementa como una clase especializada, permitiendo escalabilidad y fácil mantenimiento.
 
  Clases Principales
+ 
  ImageForgeryDetector
 
 Clase central del sistema:
